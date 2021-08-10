@@ -10,7 +10,7 @@ class MyApp extends StatelessWidget {
           primaryColor: Colors.blueGrey,
           brightness: Brightness.dark,
           primarySwatch: Colors.green),
-      home: homeScreen(title: 'Wastegram'),
+      home: homeScreen(title: 'Wasteagram'),
     );
   }
 }
