@@ -3,9 +3,38 @@ import 'package:wastegram/widgets/new_photo_button.dart';
 
 class homeScreen extends StatelessWidget {
   final String title;
+
   homeScreen({Key? key, required this.title}) : super(key: key);
   @override
   Widget build(BuildContext context) {
+    final List<String> entries = <String>[
+      'A',
+      'B',
+      'C',
+      'D',
+      'E',
+      'F',
+      'G',
+      'H',
+      'I',
+      'G',
+      'K',
+      'L'
+    ];
+    final List<int> colorCodes = <int>[
+      600,
+      500,
+      400,
+      300,
+      600,
+      500,
+      400,
+      300,
+      600,
+      500,
+      400,
+      300,
+    ];
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -15,38 +44,23 @@ class homeScreen extends StatelessWidget {
         children: <Widget>[
           Expanded(
             child: SizedBox(
-              height: 200,
-              child: ListView(
+              child: ListView.separated(
                 padding: const EdgeInsets.all(8),
-                children: [
-                  Container(
+                itemCount: entries.length,
+                itemBuilder: (BuildContext context, int index) {
+                  return Container(
                     height: 50,
-                    color: Colors.amber[600],
-                    child: const Center(
-                      child: Text('Entry A'),
-                    ),
-                  ),
-                  Container(
-                    height: 50,
-                    color: Colors.amber[500],
-                    child: const Center(
-                      child: Text('Entry B'),
-                    ),
-                  ),
-                  Container(
-                    height: 50,
-                    color: Colors.amber[100],
-                    child: const Center(
-                      child: Text('Entry C'),
-                    ),
-                  ),
-                ],
+                    color: Colors.green[colorCodes[index]],
+                    child: Center(child: Text('Entry ${entries[index]}')),
+                  );
+                },
+                separatorBuilder: (BuildContext context, int index) =>
+                    const Divider(),
               ),
             ),
           ),
-          Spacer(),
           Container(
-            padding: const EdgeInsets.all(55.0),
+            padding: const EdgeInsets.all(30.0),
             child: Semantics(
               child: newPhotoButton(),
               button: true,
