@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:wastegram/widgets/new_photo_button.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 
 class homeScreen extends StatelessWidget {
   final String title;
