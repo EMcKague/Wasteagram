@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:wastegram/widgets/new_photo_button.dart';
+import 'package:wastegram/widgets/posts_list.dart';
 // import 'package:cloud_firestore/cloud_firestore.dart';
 // import 'package:firebase_storage/firebase_storage.dart';
 
@@ -44,23 +45,26 @@ class homeScreen extends StatelessWidget {
       ),
       body: Column(
         children: <Widget>[
-          Expanded(
-            child: SizedBox(
-              child: ListView.separated(
-                padding: const EdgeInsets.all(8),
-                itemCount: entries.length,
-                itemBuilder: (BuildContext context, int index) {
-                  return Container(
-                    height: 50,
-                    color: Colors.green[colorCodes[index]],
-                    child: Center(child: Text('Entry ${entries[index]}')),
-                  );
-                },
-                separatorBuilder: (BuildContext context, int index) =>
-                    const Divider(),
-              ),
-            ),
+          PostsList(
+            title: this.title,
           ),
+          // Expanded(
+          //   child: SizedBox(
+          //     child: ListView.separated(
+          //       padding: const EdgeInsets.all(8),
+          //       itemCount: entries.length,
+          //       itemBuilder: (BuildContext context, int index) {
+          //         return Container(
+          //           height: 50,
+          //           color: Colors.green[colorCodes[index]],
+          //           child: Center(child: Text('Entry ${entries[index]}')),
+          //         );
+          //       },
+          //       separatorBuilder: (BuildContext context, int index) =>
+          //           const Divider(),
+          //     ),
+          //   ),
+          // ),
           Container(
             padding: const EdgeInsets.all(30.0),
             child: Semantics(

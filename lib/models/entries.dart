@@ -6,7 +6,7 @@ class Entry {
   String? imageURL;
   double? latitude;
   double? longitude;
-  int? wastedItemsCount;
+  int? wastedItemCount;
 
   // Entry(
   //     {required this.datePosted,
@@ -17,11 +17,11 @@ class Entry {
 
   Entry.fromMap(Map entry) {
     // return Entry.fromMap({
-    this.datePosted = entry[datePosted];
-    this.imageURL = entry[imageURL];
-    this.latitude = entry[latitude];
-    this.longitude = entry[longitude];
-    this.wastedItemsCount = entry[wastedItemsCount];
+    this.datePosted = entry['datePosted'];
+    this.imageURL = entry['imageURL'];
+    this.latitude = entry['latitude'];
+    this.longitude = entry['longitude'];
+    this.wastedItemCount = entry['wastedItemCount'];
     // )};
   }
 

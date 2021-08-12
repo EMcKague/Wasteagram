@@ -22,69 +22,83 @@ class _ListState extends State<PostsList> {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(
-      stream: _postsStream,
-      builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-        // bool snapshots_available = snapshot.hasData && snapshot.data!.exists;
-        if (snapshot.hasError) {
-          return Text("something went wrong");
-        }
-        if (snapshot.hasData) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return CircularProgressIndicator();
+        stream: _postsStream,
+        builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+          if (snapshot.hasData && snapshot.data!.docs.length > 0) {
+            return _postList(snapshot: snapshot);
           }
-          return _postList(snapshot: snapshot);
+          return Center(child: CircularProgressIndicator());
         }
-        return CircularProgressIndicator();
-      },
-    );
+
+        // bool snapshots_available = snapshot.hasData && snapshot.data!.exists;
+        // if (snapshot.hasError) {
+        //   return Text("something went wrong");
+        // }
+        // if (snapshot.hasData) {
+        //   if (snapshot.connectionState == ConnectionState.waiting) {
+        //     return CircularProgressIndicator();
+        //   }
+        //   return _postList(snapshot: snapshot);
+        // }
+        // return CircularProgressIndicator();
+        );
   }
 
   Widget _postList({required AsyncSnapshot snapshot}) {
+    print(
+        "The snapshot timestamp here:  ${snapshot.data!.docs[0].get('datePosted')}\n"
+        'The snapshot number of wasted items: ${snapshot.data!.docs[0].get('wastedItemCount')}\n');
     return Expanded(
-        child: SizedBox(
-            child: ListView.separated(
-      padding: const EdgeInsets.all(8),
-      itemBuilder: (BuildContext context, int index) {
-        return _postEntry(context, _buildEntry(snapshot.data.documents[index]));
-      },
-      separatorBuilder: (BuildContext context, int index) => const Divider(),
-      itemCount: snapshot.data.documents.length,
-    )));
+      child: SizedBox(
+        child: ListView.separated(
+          padding: const EdgeInsets.all(8),
+          itemBuilder: (BuildContext context, int index) {
+            return _postEntry(context, _buildEntry(snapshot.data.docs[index]));
+          },
+          separatorBuilder: (BuildContext context, int index) =>
+              const Divider(),
+          itemCount: snapshot.data.docs.length,
+        ),
+      ),
+    );
   }
 
   Entry _buildEntry(DocumentSnapshot document) {
     return Entry.fromMap({
-      'datePosted': document['date_posted'],
-      'wastedItemCount': document['count'],
+      'datePosted': document['datePosted'],
+      'wastedItemCount': document['wastedItemCount'],
       'latitude': document['latitude'],
       'longitude': document['longitude'],
-      'imageURL': document['image_url']
+      'imageURL': document['imageURL']
     });
   }
 
   Widget _postEntry(BuildContext context, Entry entry) {
+    print("here is the entry: ${entry}");
     return Semantics(
       button: false,
       child: _entryTile(context, entry),
-      label:
-          "List element of a wasteagram post made on ${entry.timeSinceEntry}",
+      label: "a better label shoudl be here",
+      // "List element of a wasteagram post made on ${entry.timeSinceEntry}",
     );
   }
 
   Widget _entryTile(BuildContext context, Entry entry) {
+    print("Number of wasted items = ${entry.wastedItemCount}");
     return ListTile(
       title: Row(
         children: [
           Expanded(
             child: Text(
+              // 'some time',
               entry.timeSinceEntry,
-              style: Theme.of(context).textTheme.headline4,
+              style: Theme.of(context).textTheme.headline5,
             ),
           ),
           Container(
             padding: const EdgeInsets.all(10),
             child: Text(
-              entry.wastedItemsCount.toString(),
+              entry.wastedItemCount.toString(),
               style: Theme.of(context).textTheme.headline5,
             ),
           ),
