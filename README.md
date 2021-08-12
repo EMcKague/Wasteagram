@@ -1,4 +1,4 @@
-# wastegram
+# wasteagram
 
 A new Flutter project.
 
