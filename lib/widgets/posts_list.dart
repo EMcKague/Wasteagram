@@ -17,31 +17,18 @@ class _ListState extends State<PostsList> {
       .collection('wastePosts')
       .orderBy('datePosted', descending: true)
       .snapshots();
-  // Entry _currentEntry = Entry();
 
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(
-        stream: _postsStream,
-        builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-          if (snapshot.hasData && snapshot.data!.docs.length > 0) {
-            return _postList(snapshot: snapshot);
-          }
-          return Center(child: CircularProgressIndicator());
+      stream: _postsStream,
+      builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+        if (snapshot.hasData && snapshot.data!.docs.length > 0) {
+          return _postList(snapshot: snapshot);
         }
-
-        // bool snapshots_available = snapshot.hasData && snapshot.data!.exists;
-        // if (snapshot.hasError) {
-        //   return Text("something went wrong");
-        // }
-        // if (snapshot.hasData) {
-        //   if (snapshot.connectionState == ConnectionState.waiting) {
-        //     return CircularProgressIndicator();
-        //   }
-        //   return _postList(snapshot: snapshot);
-        // }
-        // return CircularProgressIndicator();
-        );
+        return Center(child: CircularProgressIndicator());
+      },
+    );
   }
 
   Widget _postList({required AsyncSnapshot snapshot}) {
@@ -64,13 +51,15 @@ class _ListState extends State<PostsList> {
   }
 
   Entry _buildEntry(DocumentSnapshot document) {
-    return Entry.fromMap({
-      'datePosted': document['datePosted'],
-      'wastedItemCount': document['wastedItemCount'],
-      'latitude': document['latitude'],
-      'longitude': document['longitude'],
-      'imageURL': document['imageURL']
-    });
+    return Entry.fromMap(
+      {
+        'datePosted': document['datePosted'],
+        'wastedItemCount': document['wastedItemCount'],
+        'latitude': document['latitude'],
+        'longitude': document['longitude'],
+        'imageURL': document['imageURL']
+      },
+    );
   }
 
   Widget _postEntry(BuildContext context, Entry entry) {
