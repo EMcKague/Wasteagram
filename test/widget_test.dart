@@ -26,15 +26,4 @@ void main() {
     expect(entry.longitude, longitude);
     expect(entry.latitude, latitude);
   });
-
-  test('Test passing constructors to the New Screen', () {
-    final imageURL = 'test.com';
-    final imageFile = File('');
-
-    final newScreenArgs =
-        NewPostScreen(imageURL: imageURL, imageFile: imageFile);
-
-    expect(newScreenArgs.imageURL, imageURL);
-    expect(newScreenArgs.imageFile, imageFile);
-  });
 }
