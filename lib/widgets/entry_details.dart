@@ -1,20 +1,10 @@
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:wastegram/models/entries.dart';
 
 class EntryDetails extends StatelessWidget {
   final Entry entry;
 
   EntryDetails({Key? key, required this.entry}) : super(key: key);
-
-  // XFile? image;
-
-  // Future getImage() async {
-  //   image = await ImagePicker.pickImage(source: ImageSource.gallery);
-  //   StorageReference storageReference =
-  //       FirebaseStorage.instance.ref().child(DateTime.now().toString());
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -36,6 +26,7 @@ class EntryDetails extends StatelessWidget {
             child: Image.network(url!),
           ),
         )
+        // need to add longitude and latitude
       ],
     );
   }

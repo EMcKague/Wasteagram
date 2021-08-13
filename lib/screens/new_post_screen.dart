@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'dart:io';
@@ -6,17 +7,21 @@ import 'package:wastegram/models/entries.dart';
 import 'package:wastegram/screens/home_screen.dart';
 
 class NewPostScreen extends StatefulWidget {
+  final String imageURL;
   final File imageFile;
-  NewPostScreen({Key? key, required this.imageFile}) : super(key: key);
+  NewPostScreen({Key? key, required this.imageURL, required this.imageFile})
+      : super(key: key);
 
   @override
   _NewPostState createState() => _NewPostState();
 }
 
 class _NewPostState extends State<NewPostScreen> {
-  final formKey = GlobalKey<FormState>();
-  final entry = Entry();
+  late double? latitude;
+  late double? longitude;
+  late int? wastedItemCount;
   late LocationData locationData;
+  final formKey = GlobalKey<FormState>();
 
   @override
   void initState() {
@@ -27,8 +32,9 @@ class _NewPostState extends State<NewPostScreen> {
   Future _getLocation() async {
     var locationService = Location();
     locationData = await locationService.getLocation();
-    entry.latitude = locationData.latitude;
-    entry.longitude = locationData.longitude;
+    latitude = locationData.latitude;
+    longitude = locationData.longitude;
+    print('${latitude} ${longitude}');
   }
 
   @override
@@ -41,30 +47,21 @@ class _NewPostState extends State<NewPostScreen> {
           style: TextStyle(fontSize: 25),
         ),
       ),
-      body: FutureBuilder(
-        future: _getLocation(),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(child: CircularProgressIndicator());
-          } else {
-            return Column(
-              children: [
-                Flexible(
-                  flex: 10,
-                  child: _displayImage(),
-                ),
-                Flexible(
-                  flex: 3,
-                  child: wastedForm(),
-                ),
-                Flexible(
-                  flex: 3,
-                  child: _upload_image_button(),
-                ),
-              ],
-            );
-          }
-        },
+      body: Column(
+        children: [
+          Flexible(
+            flex: 10,
+            child: _displayImage(),
+          ),
+          Flexible(
+            flex: 3,
+            child: wastedForm(),
+          ),
+          Flexible(
+            flex: 3,
+            child: _upload_image_button(),
+          ),
+        ],
       ),
     );
   }
@@ -91,7 +88,10 @@ class _NewPostState extends State<NewPostScreen> {
               RegExp(r'[0-9]'),
             ),
           ],
-          onSaved: (value) {},
+          onSaved: (value) {
+            print('value: ${int.parse(value!)}');
+            wastedItemCount = int.parse(value);
+          },
           validator: (value) {
             if (value!.isEmpty) {
               return 'Please Enter a Number';
@@ -116,11 +116,14 @@ class _NewPostState extends State<NewPostScreen> {
               if (formKey.currentState!.validate()) {
                 formKey.currentState!.save();
                 // submit the post
-                Navigator.pushAndRemoveUntil(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => homeScreen(title: 'Wasteagram')),
-                    (route) => false);
+                FirebaseFirestore.instance.collection("wastePosts").add({
+                  'imageURL': widget.imageURL,
+                  'datePosted': Timestamp.now(),
+                  'latitude': latitude,
+                  'longitude': longitude,
+                  'wastedItemCount': wastedItemCount
+                });
+                Navigator.pushNamed(context, 'homeScreen');
               }
             },
           ),

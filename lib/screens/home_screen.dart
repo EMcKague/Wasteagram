@@ -5,48 +5,48 @@ import 'package:wastegram/widgets/posts_list.dart';
 // import 'package:firebase_storage/firebase_storage.dart';
 
 class homeScreen extends StatelessWidget {
-  final String title;
-
-  homeScreen({Key? key, required this.title}) : super(key: key);
+  homeScreen({
+    Key? key,
+  }) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    final List<String> entries = <String>[
-      'A',
-      'B',
-      'C',
-      'D',
-      'E',
-      'F',
-      'G',
-      'H',
-      'I',
-      'G',
-      'K',
-      'L'
-    ];
-    final List<int> colorCodes = <int>[
-      600,
-      500,
-      400,
-      300,
-      600,
-      500,
-      400,
-      300,
-      600,
-      500,
-      400,
-      300,
-    ];
+    // final List<String> entries = <String>[
+    //   'A',
+    //   'B',
+    //   'C',
+    //   'D',
+    //   'E',
+    //   'F',
+    //   'G',
+    //   'H',
+    //   'I',
+    //   'G',
+    //   'K',
+    //   'L'
+    // ];
+    // final List<int> colorCodes = <int>[
+    //   600,
+    //   500,
+    //   400,
+    //   300,
+    //   600,
+    //   500,
+    //   400,
+    //   300,
+    //   600,
+    //   500,
+    //   400,
+    //   300,
+    // ];
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Text(title),
+        title: Text('Wasteagram'),
       ),
       body: Column(
         children: <Widget>[
           PostsList(
-            title: this.title,
+            title: 'Wasteagram',
           ),
           // Expanded(
           //   child: SizedBox(
@@ -66,7 +66,7 @@ class homeScreen extends StatelessWidget {
           //   ),
           // ),
           Container(
-            padding: const EdgeInsets.all(30.0),
+            padding: const EdgeInsets.only(top: 190),
             child: Semantics(
               child: newPhotoButton(),
               button: true,

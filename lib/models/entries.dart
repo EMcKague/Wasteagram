@@ -8,28 +8,19 @@ class Entry {
   double? longitude;
   int? wastedItemCount;
 
-  Entry(
-      {this.datePosted,
-      this.imageURL,
-      this.latitude,
-      this.longitude,
-      this.wastedItemCount});
-
   // Entry(
-  //     {required this.datePosted,
-  //     required this.imageURL,
-  //     required this.latitude,
-  //     required this.longitude,
-  //     required this.wastedItemsCount});
+  //     {this.datePosted,
+  //     this.imageURL,
+  //     this.latitude,
+  //     this.longitude,
+  //     this.wastedItemCount});
 
   Entry.fromMap(Map entry) {
-    // return Entry.fromMap({
     this.datePosted = entry['datePosted'];
     this.imageURL = entry['imageURL'];
     this.latitude = entry['latitude'];
     this.longitude = entry['longitude'];
     this.wastedItemCount = entry['wastedItemCount'];
-    // )};
   }
 
   String get timeSinceEntry {

@@ -15,7 +15,7 @@ class _newPhotoButtonState extends State<newPhotoButton> {
   late File imageFile;
   final picker = ImagePicker();
 
-  Future<File> uploadImage() async {
+  Future<String> uploadImage() async {
     final pickedFile = await picker.pickImage(source: ImageSource.gallery);
     imageFile = File(pickedFile!.path);
 
@@ -23,20 +23,21 @@ class _newPhotoButtonState extends State<newPhotoButton> {
     Reference storageReference = FirebaseStorage.instance.ref().child(filename);
     UploadTask uploadTask = storageReference.putFile(imageFile);
     await uploadTask;
-    final url = await storageReference.getDownloadURL();
-    print(url);
-    return imageFile;
+    final imageURL = await storageReference.getDownloadURL();
+    print(imageURL);
+    return imageURL;
   }
 
   @override
   Widget build(BuildContext context) {
     return FloatingActionButton(
       onPressed: () async {
-        var imageFile = await uploadImage();
+        var imageURL = await uploadImage();
         Navigator.push(
             context,
             MaterialPageRoute(
-                builder: (context) => NewPostScreen(imageFile: imageFile)));
+                builder: (context) =>
+                    NewPostScreen(imageURL: imageURL, imageFile: imageFile)));
       },
       child: Icon(Icons.camera_alt),
     );

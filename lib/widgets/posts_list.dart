@@ -27,15 +27,15 @@ class _ListState extends State<PostsList> {
         if (snapshot.hasData && snapshot.data!.docs.length > 0) {
           return _postList(snapshot: snapshot);
         }
-        return Center(child: CircularProgressIndicator());
+        return Center(
+            child: Padding(
+                padding: EdgeInsets.all(175),
+                child: CircularProgressIndicator()));
       },
     );
   }
 
   Widget _postList({required AsyncSnapshot snapshot}) {
-    print(
-        "The snapshot timestamp here:  ${snapshot.data!.docs[0].get('datePosted')}\n"
-        'The snapshot number of wasted items: ${snapshot.data!.docs[0].get('wastedItemCount')}\n');
     return Expanded(
       child: SizedBox(
         child: ListView.separated(
@@ -68,8 +68,6 @@ class _ListState extends State<PostsList> {
     return Semantics(
       button: false,
       child: _entryTile(context, entry),
-      label: "a better label shoudl be here",
-      // "List element of a wasteagram post made on ${entry.timeSinceEntry}",
     );
   }
 
@@ -80,7 +78,6 @@ class _ListState extends State<PostsList> {
         children: [
           Expanded(
             child: Text(
-              // 'some time',
               entry.timeSinceEntry,
               style: Theme.of(context).textTheme.headline5,
             ),
@@ -99,7 +96,6 @@ class _ListState extends State<PostsList> {
           context,
           MaterialPageRoute(
             builder: (context) => DetailScreen(
-              title: widget.title,
               entry: entry,
             ),
           ),
