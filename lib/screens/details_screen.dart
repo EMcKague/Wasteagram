@@ -12,7 +12,7 @@ class DetailScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Text("Wasteagram - ${entry.wastedItemCount.toString()}"),
+        title: Text("Wasteagram"),
       ),
       body: EntryDetails(entry: entry),
     );

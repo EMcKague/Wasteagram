@@ -18,7 +18,6 @@ class _newPhotoButtonState extends State<newPhotoButton> {
   Future<String> uploadImage() async {
     final pickedFile = await picker.pickImage(source: ImageSource.gallery);
     imageFile = File(pickedFile!.path);
-
     var filename = DateTime.now().toString() + '.jpg';
     Reference storageReference = FirebaseStorage.instance.ref().child(filename);
     UploadTask uploadTask = storageReference.putFile(imageFile);
