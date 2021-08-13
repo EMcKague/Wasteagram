@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 // import 'package:wasteagram/models/entries.dart';
 import 'package:wastegram/models/entries.dart';
+import 'package:wastegram/screens/details_screen.dart';
 import 'package:wastegram/screens/home_screen.dart';
 
 class PostsList extends StatefulWidget {
@@ -97,8 +98,9 @@ class _ListState extends State<PostsList> {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => homeScreen(
-              title: 'should be detail screen',
+            builder: (context) => DetailScreen(
+              title: widget.title,
+              entry: entry,
             ),
           ),
         );

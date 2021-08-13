@@ -8,6 +8,13 @@ class Entry {
   double? longitude;
   int? wastedItemCount;
 
+  Entry(
+      {this.datePosted,
+      this.imageURL,
+      this.latitude,
+      this.longitude,
+      this.wastedItemCount});
+
   // Entry(
   //     {required this.datePosted,
   //     required this.imageURL,
