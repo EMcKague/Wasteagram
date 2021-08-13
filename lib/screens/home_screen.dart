@@ -45,9 +45,7 @@ class homeScreen extends StatelessWidget {
       ),
       body: Column(
         children: <Widget>[
-          PostsList(
-            title: 'Wasteagram',
-          ),
+          PostsList(),
           // Expanded(
           //   child: SizedBox(
           //     child: ListView.separated(

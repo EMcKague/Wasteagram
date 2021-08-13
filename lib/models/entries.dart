@@ -8,12 +8,12 @@ class Entry {
   double? longitude;
   int? wastedItemCount;
 
-  // Entry(
-  //     {this.datePosted,
-  //     this.imageURL,
-  //     this.latitude,
-  //     this.longitude,
-  //     this.wastedItemCount});
+  Entry(
+      {this.datePosted,
+      this.imageURL,
+      this.latitude,
+      this.longitude,
+      this.wastedItemCount});
 
   Entry.fromMap(Map entry) {
     this.datePosted = entry['datePosted'];

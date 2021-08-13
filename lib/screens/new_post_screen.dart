@@ -3,8 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'dart:io';
 import 'package:location/location.dart';
-import 'package:wastegram/models/entries.dart';
-import 'package:wastegram/screens/home_screen.dart';
 
 class NewPostScreen extends StatefulWidget {
   final String imageURL;
@@ -67,37 +65,42 @@ class _NewPostState extends State<NewPostScreen> {
   }
 
   Widget _displayImage() {
-    return Center(
-      child: ConstrainedBox(
-        constraints: BoxConstraints(maxHeight: 300, maxWidth: 350),
-        child: Image.file(widget.imageFile),
+    return Semantics(
+      label: 'photo selecetd for wasteagram',
+      child: Center(
+        child: ConstrainedBox(
+          constraints: BoxConstraints(maxHeight: 300, maxWidth: 350),
+          child: Image.file(widget.imageFile),
+        ),
       ),
     );
   }
 
   Widget wastedForm() {
-    return Form(
-      key: formKey,
-      child: Padding(
-        padding: EdgeInsets.all(10),
-        child: TextFormField(
-          decoration: InputDecoration(labelText: 'Number of items wasted'),
-          keyboardType: TextInputType.number,
-          inputFormatters: <TextInputFormatter>[
-            FilteringTextInputFormatter.allow(
-              RegExp(r'[0-9]'),
-            ),
-          ],
-          onSaved: (value) {
-            print('value: ${int.parse(value!)}');
-            wastedItemCount = int.parse(value);
-          },
-          validator: (value) {
-            if (value!.isEmpty) {
-              return 'Please Enter a Number';
-            }
-          },
-          style: TextStyle(fontSize: 20),
+    return Semantics(
+      label: 'Enter the number of wasted items',
+      child: Form(
+        key: formKey,
+        child: Padding(
+          padding: EdgeInsets.all(10),
+          child: TextFormField(
+            decoration: InputDecoration(labelText: 'Number of items wasted'),
+            keyboardType: TextInputType.number,
+            inputFormatters: <TextInputFormatter>[
+              FilteringTextInputFormatter.allow(
+                RegExp(r'[0-9]'),
+              ),
+            ],
+            onSaved: (value) {
+              wastedItemCount = int.parse(value!);
+            },
+            validator: (value) {
+              if (value!.isEmpty) {
+                return 'Please enter a number that reflects the number of wasted items';
+              }
+            },
+            style: TextStyle(fontSize: 20),
+          ),
         ),
       ),
     );
@@ -105,6 +108,7 @@ class _NewPostState extends State<NewPostScreen> {
 
   Widget _upload_image_button() {
     return Semantics(
+      label: 'Submit wasteagram button',
       child: Padding(
         padding: EdgeInsets.all(15),
         child: SizedBox(

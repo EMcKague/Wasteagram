@@ -1,13 +1,14 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-// import 'package:wasteagram/models/entries.dart';
 import 'package:wastegram/models/entries.dart';
 import 'package:wastegram/screens/details_screen.dart';
-import 'package:wastegram/screens/home_screen.dart';
 
 class PostsList extends StatefulWidget {
-  final String title;
-  PostsList({Key? key, required this.title}) : super(key: key);
+  // final String title;
+  PostsList({
+    Key? key,
+    // required this.title
+  }) : super(key: key);
 
   @override
   _ListState createState() => _ListState();
@@ -28,9 +29,11 @@ class _ListState extends State<PostsList> {
           return _postList(snapshot: snapshot);
         }
         return Center(
-            child: Padding(
-                padding: EdgeInsets.all(175),
-                child: CircularProgressIndicator()));
+          child: Padding(
+            padding: EdgeInsets.all(175),
+            child: CircularProgressIndicator(),
+          ),
+        );
       },
     );
   }
@@ -64,8 +67,9 @@ class _ListState extends State<PostsList> {
   }
 
   Widget _postEntry(BuildContext context, Entry entry) {
-    print("here is the entry: ${entry}");
+    // print("here is the entry: ${entry}");
     return Semantics(
+      label: 'a entry in wasteagram made on ${entry.datePosted}',
       button: false,
       child: _entryTile(context, entry),
     );

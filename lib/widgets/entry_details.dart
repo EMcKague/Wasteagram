@@ -8,9 +8,6 @@ class EntryDetails extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double height = MediaQuery.of(context).size.height * 0.85;
-    double width = MediaQuery.of(context).size.width * 0.90;
-    var url = entry.imageURL;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -21,13 +18,25 @@ class EntryDetails extends StatelessWidget {
         ),
         Flexible(
           flex: 10,
-          child: ConstrainedBox(
-            constraints: BoxConstraints(maxHeight: height, maxWidth: width),
-            child: Image.network(url!),
-          ),
-        )
-        // need to add longitude and latitude
+          child: Container(child: Image.network(entry.imageURL!)),
+        ),
+        Flexible(flex: 5, child: _getText()),
+        Align(
+          alignment: Alignment.bottomCenter,
+          child: Text(
+              'Location: ${entry.latitude.toString()}, ${entry.longitude.toString()}'),
+        ),
       ],
     );
+  }
+
+  Widget _getText() {
+    String text;
+    if (entry.wastedItemCount! > 1) {
+      text = 'items';
+    } else {
+      text = 'item';
+    }
+    return Text('${entry.wastedItemCount} ${text}');
   }
 }
